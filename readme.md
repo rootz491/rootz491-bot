@@ -23,3 +23,7 @@ as there can be many events, we will handle them in seperate file.
 
 it's similar to command handling.
 
+---
+
+list of all discord.js events:
+https://gist.github.com/koad/316b265a91d933fd1b62dddfcc3ff584
