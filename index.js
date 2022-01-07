@@ -1,5 +1,5 @@
-// const Discord = require('discord.js');
-const { Client, Intents, MessageEmbed } = require('discord.js');
+const { Client, Intents } = require('discord.js');
+const { sendEmbed } = require('./tools/embed');
 require('dotenv').config();
 
 // create a new client instance
@@ -26,46 +26,44 @@ client.on('interactionCreate', async interaction => {
 
 client.on('guildMemberAdd', async (member) => {
     const welcomechannelId = '928713742345183272' //Channel You Want to Send The Welcome Message
-    const targetChannelId = `928712335651115048` //Channel For Rules
+    const rulesChannelId = `928712335651115048` //Channel For Rules
 
-    let welcomeRole = member.guild.roles.cache.find(role => role.name === 'noobie');
-    member.roles.add(welcomeRole);
 
     const channel = member.guild.channels.cache.get(welcomechannelId)
 
-    // const WelcomeEmbed = new MessageEmbed()
-    // .setTitle(`Welcome To ${member.guild.name}`)
-    // .setThumbnail(member.user.displayAvatarURL({dynamic: true, size: 512}))
-    // .setDescription(`Hello <@${member.user.id}>, Welcome to **${member.guild.name}**. Thanks For Joining Our Server.
-    // Please Read ${member.guild.channels.cache.get(targetChannelId).toString()}, and assign yourself some roles at <#846341532520153088>. You can chat in <#753484351882133507> and talk with other people.`)
-    // // You Can Add More Fields If You Want
-    // .setColor('RANDOM')
+    const welcomeMsg = {
+        title: `Welcome to ${member.guild.name}!`,
+        description: `Welcome to the server, ${member.user.username}!\n\nPlease read the rules in ${member.guild.channels.cache.get(rulesChannelId).toString()} and then type \`!accept\` in ${member.guild.channels.cache.get().toString()} to accept them.`,
+        thumbnail: member.user.displayAvatarURL({dynamic: true, size: 512}),
+        color: '#00ff00',
+        footer: `${member.guild.name} | ${member.guild.memberCount} members`
+    }
 
-    const WelcomeMessage =  `Hello <@${member.user.id}>, Welcome to **${member.guild.name}**. Thanks For Joining Our Server.\nPlease Read ${member.guild.channels.cache.get(targetChannelId).toString()} before using sever.`
-    channel.send(WelcomeMessage);
+    sendEmbed(welcomeMsg, channel);
 })
 
 client.on('guildMemberRemove', async (member) => {
-    console.log(member);
+    console.log(`${member.user.username} has left the server.`)
 
     const goodbyeChannelId = '928716548334583868' //Channel You Want to Send The Good Bye Message
 
     const channel = member.guild.channels.cache.get(goodbyeChannelId);
 
-    // const GoodByeEmbed = new MessageEmbed()
-    // .setTitle(`Tata From ${member.guild.name}`)
-    // .setThumbnail(member.user.displayAvatarURL({dynamic: true, size: 512}))
-    // .setDescription(`Hello <@${member.user.id}>, Good Bye from **${member.guild.name}**. Thanks For Being A Member Of Our Server. I Hope You Will Come Back Again.`)
-    // // You Can Add More Fields If You Want
-    // .setColor('RANDOM')
+    channel.send(`${member.user.username} has left the server.`)
 
-    const GoodByeMessage =  `Hello <@${member.user.id}>, Good Bye from **${member.guild.name}**. Thanks For Being A Member Of Our Server. I Hope You Will Come Back Again.`
-    channel.send(GoodByeMessage);
+    const goodbyeMsg = {
+        title: `${member.user.username} has left the server!`,
+        description: `${member.user.username} has left the server. Let's Hope he/she will return soon!`,
+        thumbnail: member.user.displayAvatarURL({dynamic: true, size: 512}),
+        color: '#ff0000',
+        footer: `${member.guild.name} | ${member.guild.memberCount} members`
+    }
+
+    sendEmbed(goodbyeMsg, channel);
 });
 
-client.on('message', async message => {
+client.on('messageCreate', async message => {
     if (message.author.bot) return;
-    // if (message.channel.type === 'dm') return;
 
     const prefix = '!';
     const args = message.content.slice(prefix.length).trim().split(/ +/);
@@ -73,6 +71,10 @@ client.on('message', async message => {
     if (command === 'ping') {
         const m = await message.channel.send('Ping?');
         m.edit(`Pong! Latency is ${m.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(client.ws.ping)}ms`);
+    }
+    else if (command === 'accept') {
+        let welcomeRole = message.member.guild.roles.cache.find(role => role.name === 'noobie');
+        message.member.roles.add(welcomeRole);
     }
 })
 
