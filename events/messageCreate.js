@@ -1,8 +1,8 @@
 module.exports = {
     name: 'messageCreate',
     once: false,
-    execute(message) {
-        
+    execute: async (message) => {
+        console.log(`Message received from ${message.author.tag}`);
         if (message.author.bot) return;
 
         const prefix = '!';

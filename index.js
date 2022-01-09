@@ -4,16 +4,16 @@ require('dotenv').config();
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
-/*
-* Handling Commands */
-client.commands = new Collection();
-// read all files in the commands directory (as each file is a command)
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
-for (const file of commandFiles) {
-    const command = require(`./commands/${file}`);
-    // set new item in `commands` collection with key as command name and value as exported module.
-    client.commands.set(command.name, command);
-}
+// /*
+// * Handling Commands */
+// client.commands = new Collection();
+// // read all files in the commands directory (as each file is a command)
+// const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+// for (const file of commandFiles) {
+//     const command = require(`./commands/${file}`);
+//     // set new item in `commands` collection with key as command name and value as exported module.
+//     client.commands.set(command.name, command);
+// }
 
 /*
 * Handling Events */
