@@ -2,7 +2,6 @@ module.exports = {
     name: 'messageCreate',
     once: false,
     execute: async (message) => {
-        console.log(`Message received from ${message.author.tag}`);
         if (message.author.bot) return;
 
         const prefix = '!';
@@ -10,8 +9,9 @@ module.exports = {
         const command = args.shift().toLowerCase();
 
         if (command === 'ping') {
+            const client = message.client;
             const m = await message.channel.send('Ping?');
-            m.edit(`Pong! Latency is ${m.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(client.ws.ping)}ms`);
+            await m.edit(`Pong! Latency is ${m.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(client.ws.ping)}ms`);
         }
         else if (command === 'accept') {
             let welcomeRole = message.member.guild.roles.cache.find(role => role.name === 'noobie');
