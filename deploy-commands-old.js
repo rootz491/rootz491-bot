@@ -5,9 +5,9 @@ require('dotenv').config();
 
 // list of command to be registered
 const commands = [
-    new SlashCommandBuilder().setName('ping').setDescription('Replies with pong!'),
-    new SlashCommandBuilder().setName('server').setDescription('Replies with Server Info!'),
-    new SlashCommandBuilder().setName('user').setDescription('Replies with User Info!'),
+    // new SlashCommandBuilder().setName('ping').setDescription('Replies with pong!'),
+    // new SlashCommandBuilder().setName('server').setDescription('Replies with Server Info!'),
+    // new SlashCommandBuilder().setName('user').setDescription('Replies with User Info!'),
 ]
     .map(command => command.toJSON());
 
