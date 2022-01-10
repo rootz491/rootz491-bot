@@ -16,14 +16,23 @@ Here `interaction` is like a request from discord by bot when user interacts wit
 
 ---
 
-when user interacts with bot or something, discord emits an event.
-these events are handled by our application.
+*   when user interacts with bot or something, discord emits an event.
+    these events are handled by our application.
 
-as there can be many events, we will handle them in seperate file.
+    as there can be many events, we will handle them in seperate file.
 
-it's similar to command handling.
+    it's similar to command handling.
+
+*   File [deploy-commands.js](./deploy-commands.js) register commands using it to the discord server.
+    
+*   File [register-commands.js](./tools/register-commands.js) will add commands of `commands` folder to the bot (client) as a collection.
+
+
 
 ---
 
-list of all discord.js events:
-https://gist.github.com/koad/316b265a91d933fd1b62dddfcc3ff584
+## useful
+
+* list of all discord.js events [gist](https://gist.github.com/koad/316b265a91d933fd1b62dddfcc3ff584)
+
+* mongodb to bot [tutorial](https://www.youtube.com/watch?v=a3Gz_7KEJkQ)

@@ -1,25 +1,19 @@
-const path = require('path');
-const fs = require('fs');
-const { Collection } = require('discord.js');
+const mongoose = require('mongoose');
 
 module.exports = {
     name: 'ready',
     once: true,
-    execute(client) {
+    async execute(client, commands) {
         console.log(`Ready! Logged in as ${client.user.tag}`);
 
-        const cmdFolder = path.join(__dirname, '/../commands');
-        
-        // TODO: fix these commands, not working!
-        client.commands = new Collection();
-        // read all files in the commands directory (as each file is a command)
-        const commandFiles = fs.readdirSync(cmdFolder).filter(file => file.endsWith('.js'));
-        for (const file of commandFiles) {
-            const command = require(`${cmdFolder}/${file}`);
-            // set new item in `commands` collection with key as command name and value as exported module.
-            client.commands.set(command.name, command);
-        }
+        await mongoose.connect(process.env.MONGO_URI, {
+            keepAlive: true
+        });
 
-        // console.log(client.commands);
+        if (mongoose.connection.readyState === 1) {
+            console.log('Connected to MongoDB!');
+        } else {
+            console.log('Failed to connect to MongoDB!');
+        }
     }
 }
