@@ -3,7 +3,6 @@ module.exports = {
     async execute(interaction) {
         if (!interaction.isCommand()) return;
         // get command from `commands` collection based on the command name
-        console.log(interaction.commandName);
         const command = interaction.client.commands.get(interaction.commandName);
         // console.log('command: ', command);
         if(!command) return;
