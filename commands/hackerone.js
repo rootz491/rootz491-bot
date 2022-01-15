@@ -21,6 +21,7 @@ module.exports = {
         const program = interaction.options.getString("program");
         try {
             if (program) {
+                //  fetch hackerone reports
                 interaction.editReply(`you have requested to see the ${program} report`);
             }
         } catch (error) {
